@@ -12,27 +12,30 @@
   <script src="build/react-dom.js"></script>
   <script>
     // app code
+    var Component = React.createClass({
+      propTypes: {
+        firstName: React.PropTypes.string.isRequired,
+        middleName: React.PropTypes.string,
+        familyName: React.PropTypes.string.isRequired,
+        address: React.PropTypes.string,
+      },
+      getDefaultProps: function() {
+        return {
+          middleName: 'サミュエルソン',
+          address: 'some address'
+        }
+      },
+      render: function() {
+        return React.DOM.span(null, this.props.middleName + "i was " + this.props.name + ".");
+      }
+    });
+
+    var ComponentFactory = React.createFactory(Component);
     ReactDOM.render(
-      React.DOM.h1(
-        {
-          style: {
-            background: "black",
-            color: "white",
-            fontFamily: "Verdana"
-          },
-          className: "pretty",
-          htmlFor: "me",
-          id: "my-heading"
-        },
-        React.DOM.span(
-          null,
-          React.DOM.em(
-            null, "hell"
-          ),
-          "o"
-        ),
-        " wor;d"
-      ),
+      React.createElement(Component, {
+//        name: 'sashimi',
+        name: 123,
+      }),
       document.getElementById("app")
     );
   </script>
