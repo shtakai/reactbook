@@ -30,7 +30,7 @@
       }
     });
 
-    var TextAreaCounter = React.createClass({
+    var logMixin = {
       _log: function(methodName, args) {
         console.log(methodName, args);
       },
@@ -57,6 +57,11 @@
         this._log('should update', arguments);
         return true;
       },
+    };
+
+    var TextAreaCounter = React.createClass({
+      name: 'TextAreaCounter',
+      mixins: [logMixin],
 
       // antipattern
       propTypes: {
