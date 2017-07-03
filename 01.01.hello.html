@@ -31,6 +31,33 @@
     });
 
     var TextAreaCounter = React.createClass({
+      _log: function(methodName, args) {
+        console.log(methodName, args);
+      },
+      componentWillUpdate: function() {
+        this._log('conponentWilllUpdate', arguments);
+      },
+      componentDidUpdate: function(oldProps, oldState) {
+        this._log('did', arguments);
+        if (this.state.text.length > 20) {
+          this.replaceState(oldState);
+        }
+      },
+      componentWillMount: function() {
+        this._log('will mount', arguments);
+      },
+      componentDidMount: function() {
+        this._log('did mount', arguments);
+        this._log('---', ReactDOM.findDOMNode(this));
+      },
+      componentWillUnmount: function() {
+        this._log('will unmount', arguments);
+      },
+      shouldComponentUpdate: function(newProps, newState) {
+        this._log('should update', arguments);
+        return true;
+      },
+
       // antipattern
       propTypes: {
           text: React.PropTypes.string,
