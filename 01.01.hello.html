@@ -39,16 +39,12 @@
       },
       componentDidUpdate: function(oldProps, oldState) {
         this._log('did', arguments);
-        if (this.state.text.length > 20) {
-          this.replaceState(oldState);
-        }
       },
       componentWillMount: function() {
         this._log('will mount', arguments);
       },
       componentDidMount: function() {
         this._log('did mount', arguments);
-        this._log('---', ReactDOM.findDOMNode(this));
       },
       componentWillUnmount: function() {
         this._log('will unmount', arguments);
@@ -59,9 +55,22 @@
       },
     };
 
+    var Counter = React.createClass({
+      name: 'Counter',
+      mixins: [logMixin],
+      propTypes: {
+        count: React.PropTypes.number.isRequired,
+      },
+      render:function() {
+        return React.DOM.span(
+          null,
+          this.props.count,
+        )
+      }
+    })
+
     var TextAreaCounter = React.createClass({
       name: 'TextAreaCounter',
-      mixins: [logMixin],
 
       // antipattern
       propTypes: {
@@ -79,13 +88,24 @@
         };
       },
       render: function() {
+        var counter = null;
+        if (this.state.text.length > 20) {
+          counter = React.DOM.h3(
+            null,
+            React.createElement(
+              Counter, {
+                count: this.state.text.length,
+              }
+            )
+          );
+        }
         return React.DOM.div(
           null,
           React.DOM.textarea({
             value: this.state.text,
             onChange: this._textChange,
           }),
-          React.DOM.h3(null, this.state.text.length)
+          counter
         );
       },
       _textChange: function(ev) {
