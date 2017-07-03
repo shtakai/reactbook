@@ -31,9 +31,16 @@
     });
 
     var TextAreaCounter = React.createClass({
+      // antipattern
       propTypes: {
-        text: React.PropTypes.string,
+          text: React.PropTypes.string,
       },
+      getInitialState: function() {
+        return {
+          text: this.props.text,
+        };
+      },
+
       getDefaultProps: function() {
         return {
           text: '',
@@ -48,11 +55,6 @@
           }),
           React.DOM.h3(null, this.state.text.length)
         );
-      },
-      getInitialState: function() {
-        return {
-          text: this.props.text,
-        };
       },
       _textChange: function(ev) {
         this.setState({
