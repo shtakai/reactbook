@@ -10,6 +10,7 @@
   </div>
   <script src="build/react.js"></script>
   <script src="build/react-dom.js"></script>
+  <script src="build/react-with-addons.js"></script>
   <script>
     // app code
     var Component = React.createClass({
@@ -57,17 +58,15 @@
 
     var Counter = React.createClass({
       name: 'Counter',
-      // mixins: [logMixin],
+      mixins: [React.addons.PureRenderMixi],
       propTypes: {
         count: React.PropTypes.number.isRequired,
       },
       render:function() {
-        return React.DOM.span(
-          console.log(this.name + ' render'),
-          this.props.count,
-        )
+        console.log(this.name + ' render');
+        return this.props.count;
       }
-    })
+    });
 
     var TextAreaCounter = React.createClass({
       name: 'TextAreaCounter',
