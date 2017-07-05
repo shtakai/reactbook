@@ -68,6 +68,8 @@
           })
         },
 
+        _preSearchData: null,
+
         render: function() {
           return(
             React.DOM.div(null,
@@ -86,6 +88,34 @@
             },
             '検索'
           )
+        },
+
+        _toggleSearch: function() {
+          if (this.state.search) {
+            this.setState({
+              data: this._preSearchData,
+              search: false,
+            })
+            this._preSearchData = null
+          } else {
+            this._preSearchData = this.state.data
+            this.setState({
+              search: true
+            })
+          }
+        },
+
+        _search: function(e) {
+          var needle = e.target.value.toLowerCase();
+          if (!needle) {
+            this.setState({data: this._preSearchData})
+            return
+          }
+          var idx = e.target.dataset.idx
+          var searchdata = this._preSearchData.filter(function(row) {
+            return row[idx].toString().toLowerCase().indexOf(needle) > -1
+          })
+          this.setState({data: searchdata})
         },
 
         _renderSearch: function() {
