@@ -21,6 +21,7 @@
             sortby: null,
             descending: false,
             edit: null,
+            search: false,
           };
         },
         propTypes: {
@@ -68,6 +69,43 @@
         },
 
         render: function() {
+          return(
+            React.DOM.div(null,
+              this._renderToolbar(),
+              this._renderTable(),
+            )
+          )
+        },
+
+
+        _renderToolbar: function() {
+          return React.DOM.button(
+            {
+              onClick: this._toggleSearch,
+              className: 'toolbar'
+            },
+            '検索'
+          )
+        },
+
+        _renderSearch: function() {
+          if (!this.state.search) {
+            return null;
+          }
+          return (
+            React.DOM.tr({onChange: this._search},
+              this.props.headers.map(function(_ignore, idx) {
+                return React.DOM.id({key: idx}),
+                  React.DOM.input({
+                    type: 'text',
+                    'data-idx': idx,
+                  })
+              })
+            )
+          )
+        },
+
+        _renderTable: function() {
           return (
             React.DOM.table(null,
               React.DOM.thead({ onClick: this._sort },
@@ -84,6 +122,7 @@
                 {
                   onDoubleClick: this._showEditor
                 },
+                this._renderSearch(),
                 this.state.data.map(function(row, rowidx) {
                   return (
                     React.DOM.tr(
