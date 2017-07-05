@@ -125,13 +125,14 @@
           return (
             React.DOM.tr({onChange: this._search},
               this.props.headers.map(function(_ignore, idx) {
-                return React.DOM.id({key: idx}),
+                return React.DOM.td({key: idx},
                   React.DOM.input({
                     type: 'text',
                     'data-idx': idx,
                   })
-              })
-            )
+              )
+            })
+          )
           )
         },
 
